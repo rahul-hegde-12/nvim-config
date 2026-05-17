@@ -846,26 +846,34 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-  { -- Catppuccin with dynamic dark/light switching
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000, -- load before other plugins
+  -- { -- Catppuccin with dynamic dark/light switching
+  --  'catppuccin/nvim',
+  --  name = 'catppuccin',
+  --  priority = 1000, -- load before other plugins
+  -- config = function()
+  -- local function set_catppuccin()
+  -- require('catppuccin').setup {
+  -- flavour = vim.o.background == 'dark' and 'frappe' or 'latte',
+  --}
+  -- vim.cmd.colorscheme 'catppuccin'
+  -- end
+
+  -- initial load
+  -- set_catppuccin()
+
+  -- update when background changes
+  -- vim.api.nvim_create_autocmd('OptionSet', {
+  -- pattern = 'background',
+  --  checkerallback = set_catppuccin,
+  -- })
+  -- end,
+  -- },
+  {
+    'nyoom-engineering/oxocarbon.nvim',
+    priority = 1000,
     config = function()
-      local function set_catppuccin()
-        require('catppuccin').setup {
-          flavour = vim.o.background == 'dark' and 'frappe' or 'latte',
-        }
-        vim.cmd.colorscheme 'catppuccin'
-      end
-
-      -- initial load
-      set_catppuccin()
-
-      -- update when background changes
-      vim.api.nvim_create_autocmd('OptionSet', {
-        pattern = 'background',
-        callback = set_catppuccin,
-      })
+      vim.opt.background = 'dark'
+      vim.cmd.colorscheme 'oxocarbon'
     end,
   },
 
