@@ -97,6 +97,7 @@ vim.g.have_nerd_font = true
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
+vim.opt.conceallevel = 2
 
 -- Make line numbers default
 vim.o.number = true
@@ -258,6 +259,54 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    ft = 'markdown',
+
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+
+    opts = {
+      workspaces = {
+        {
+          name = 'notes',
+          path = '~/notes',
+        },
+      },
+
+      daily_notes = {
+        folder = 'daily',
+      },
+
+      completion = {
+        nvim_cmp = false,
+      },
+
+      note_id_func = function(title)
+        if title ~= nil then
+          return title:gsub(' ', '-'):lower()
+        else
+          return tostring(os.time())
+        end
+      end,
+    },
+
+    keys = {
+      { '<leader>nn', '<cmd>ObsidianQuickSwitch<CR>', desc = '[N]ote switch' },
+      { '<leader>nf', '<cmd>ObsidianSearch<CR>', desc = '[N]ote find' },
+      { '<leader>nd', '<cmd>ObsidianToday<CR>', desc = '[N]aily note' },
+      { '<leader>nb', '<cmd>ObsidianBacklinks<CR>', desc = '[N]ote backlinks' },
+      { '<leader>nt', '<cmd>ObsidianTags<CR>', desc = '[N]ote tags' },
+      { '<leader>nc', '<cmd>ObsidianNew<CR>', desc = '[N]ew note' },
+    },
+  },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = 'markdown',
+  },
   {
     'nvim-java/nvim-java',
     config = function()
