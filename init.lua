@@ -368,6 +368,12 @@ require('lazy').setup({
         topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
         changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
       },
+      current_line_blame = true,
+
+      current_line_blame_opts = {
+        delay = 300,
+        virt_text_pos = 'eol',
+      },
     },
   },
 
@@ -923,10 +929,35 @@ require('lazy').setup({
     config = function()
       vim.opt.background = 'dark'
       vim.cmd.colorscheme 'oxocarbon'
+
+      local groups = {
+        'Normal',
+        'NormalNC',
+        'NormalFloat',
+        'FloatBorder',
+        'SignColumn',
+        'EndOfBuffer',
+        'StatusLine',
+        'StatusLineNC',
+        'LineNr',
+        'Folded',
+        'NonText',
+        'SpecialKey',
+        'VertSplit',
+        'WinSeparator',
+        'Pmenu',
+        'TelescopeNormal',
+        'TelescopeBorder',
+        'TelescopePromptNormal',
+        'TelescopeResultsNormal',
+        'TelescopePreviewNormal',
+      }
+
+      for _, group in ipairs(groups) do
+        vim.api.nvim_set_hl(0, group, { bg = 'NONE' })
+      end
     end,
   },
-
-  -- Highlight todo, notes, etc in comments
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
